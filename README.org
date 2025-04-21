@@ -2,7 +2,7 @@
 
 This repository manages my personal Doom Emacs configuration, tailored specifically for data science, literate programming, and productivity workflows on macOS.
 
-It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyond sane defaults, this repo adds batteries-included workflows for data science (Python, R), Org-mode (including Org-roam, Hugo blogging, RevealJS presentations), LLM tools ([OpenAI](https://openai.com) and Whisper for transcription), and integrates Github Copilot AI completion.
+It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyond sane defaults, this repo adds batteries-included workflows for data science (Python, R), Org-mode (including Org-roam, Hugo blogging, RevealJS presentations), LLM tools ([[https://openai.com][OpenAI]] and Whisper for transcription), and integrates Github Copilot AI completion.
 
 If you are interested in customizing for your own needs, see the "Customization Guide" and "Structure" sections.
 
@@ -25,22 +25,22 @@ If you are interested in customizing for your own needs, see the "Customization 
 
 * Features
 
-**Languages:**
+Languages:
 - Python, R (ESS); with LSP (language server) completions
 - Org-mode for notes, code, Roam (Zettelkasten)
 
-**Org-mode Enhancements:**
+Org-mode Enhancements:
 - [[https://www.orgroam.com/][Org-roam]]
 - Hugo support (blogging)
 - RevealJS (org-re-reveal) for presentations
 - Special block extras for literate programming
 
-**AI/LLMs:**
+AI/LLMs:
 - [[https://github.com/karthink/gptel][gptel]] (OpenAI/ChatGPT integration—see =gptel= variables in =config.el=)
 - [[https://github.com/natrys/whisper.el][whisper.el]] for in-editor transcription (macOS-specific audio device handling)
 - [[https://github.com/copilot-emacs/copilot.el][GitHub Copilot]] for in-line AI code suggestions
 
-**Productivity:**
+Productivity:
 - Workspaces, dashboard, modeline, and Magit (Git integration)
 - Extensive Org-agenda customizations
 
@@ -59,15 +59,15 @@ If you are interested in customizing for your own needs, see the "Customization 
 
 * Extending & Modifying
 
-**Adding More Packages or Languages:**
+Adding More Packages or Languages:
 - Edit =init.el= (add language or tool modules)
 - Add further =package!= entries in =packages.el=
 - Customize in =config.el=
 
-**Modifying Your Paths or Personal Data:**
+Modifying Your Paths or Personal Data:
 - Change =personal.el= or add to =custom.el= for private logic
 
-**LLM or API Customization:**
+LLM or API Customization:
 - Most gptel and Whisper configuration can be found in =config.el=, search by their names.
 
 * Updating & Doom Maintenance
