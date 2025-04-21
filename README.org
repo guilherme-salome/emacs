@@ -8,7 +8,7 @@ If you are interested in customizing for your own needs, see the "Customization 
 
 * Quick Start
 
-1. **Clone** this repo into your Doom Emacs directory (typically =~/.doom.d=).
+1. Clone this repo into your Doom Emacs directory (typically =~/.doom.d=).
 2. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
 3. Run =doom sync= and restart Emacs.
 4. Install all requisite Python/Emacs dependencies (see =packages.el= and tool-specific notes below).
