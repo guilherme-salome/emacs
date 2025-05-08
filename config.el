@@ -16,6 +16,10 @@
        bookmark-default-file (expand-file-name "bookmarks" personal-folder)
        +snippets-dir (concat personal-folder "yasnippet/"))
 
+;; fonts
+;(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 1)
+;(set-face-attribute 'default nil :font "Iosevka" :weight 'regular :height 160)
+
 ;; Tramp
 (after! tramp
   (setq! tramp-inline-compress-start-size 1000
@@ -33,8 +37,8 @@
                             (concat personal-folder "roam/people/"))
          org-log-done 'note
          org-todo-keywords '((sequence "TODO(t)" "WORKING(w)" "WAITING(h)" "REVIEW(r)" "|" "DONE(d)" "CANCELED(c)"))
-         org-todo-keyword-faces '(("TODO" . (:foreground "royal blue"))
-                                  ("WORKING" . (:foreground "cyan"))
+         org-todo-keyword-faces '(("TODO" . (:foreground "cyan"))
+                                  ("WORKING" . (:foreground "royal blue"))
                                   ("WAITING" . (:foreground "orange"))
                                   ("REVIEW" . (:foreground "navy"))
                                   ("CANCELED" . (:foreground "black"))
@@ -52,7 +56,9 @@
                                                  "\n"
                                                  (org-agenda-format-date-aligned date))
                                                 (org-agenda-format-date-aligned date)))
-         org-export-babel-evaluate nil)
+         org-export-babel-evaluate nil
+         org-hide-emphasis-markers t
+         org-format-latex-options (plist-put org-format-latex-options :scale 2))
   (org-babel-do-load-languages 'org-babel-load-languages '((dot . t))))
 
 ;; Hugo (blogging)
@@ -148,12 +154,12 @@ With PREFIX-ARG (C-u), always prompt for a new device."
          ("C-c m w" . whisper-run))
   :config
   (setq! whisper-install-directory personal-whisper-folder
-         whisper-model "medium"
-         whisper-language "en"
+         whisper-model "large-v3"
+         whisper-language "auto"
          whisper-translate t
          whisper-use-threads (/ (num-processors) 2)
          whisper-insert-text-at-point nil
-         whisper-recording-timeout 3600))
+         whisper-recording-timeout 7200))
 
 ;; Github Copilot
 ;; accept completion from copilot and fallback to company
@@ -197,3 +203,24 @@ With PREFIX-ARG (C-u), always prompt for a new device."
                           (or title (concat "Code (" lang ")")) raw-contents))
                  ;; Default Export: Use Org-mode's default behavior
                  (t raw-contents))))
+
+;; org-present
+(use-package! org-present
+  :after org)
+
+;; visual-fill-column
+(use-package! visual-fill-column
+  :after org
+  :config
+  (setq! visual-fill-column-width 110
+         visual-fill-column-center-text t)
+  (defun my/org-present-start ()
+      (visual-fill-column-mode 1)
+      (org-redisplay-inline-images))
+  (defun my/org-present-end ()
+    (visual-fill-column-mode 0))
+  (add-hook 'org-present-mode-hook 'my/org-present-start)
+  (add-hook 'org-present-mode-quit-hook 'my/org-present-end))
+
+;; org-ql
+(use-package! org-ql)
