@@ -6,6 +6,16 @@ It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyon
 
 If you are interested in customizing for your own needs, see the "Customization Guide" and "Structure" sections.
 
+* Installing Emacs
+
+I installed Emacs on MacOS using the [[https://github.com/d12frosted/homebrew-emacs-plus][emacs+]] version. Detailed instructions are in the repository, including different versions of Emacs and additional options. In short, after installing [[https://brew.sh/][Homebrew]], run:
+#+BEGIN_SRC bash
+brew tap d12frosted/emacs-plus
+brew install emacs-plus --with-imagemagick --with-debug --with-dbus --with-xwidgets --with-retro-gnu-meditate-levitate-icon
+#+END_SRC
+
+Then follow homebrew's instructions to add an icon to Emacs.
+
 * Quick Start
 
 1. Clone this repo into your Doom Emacs directory (typically =~/.doom.d=).
