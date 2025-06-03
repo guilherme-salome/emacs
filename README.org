@@ -6,7 +6,8 @@ It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyon
 
 If you are interested in customizing for your own needs, see the "Customization Guide" and "Structure" sections.
 
-* Installing Emacs
+* Complete Set-Up Guide
+** Installing Emacs
 
 I installed Emacs on MacOS using the [[https://github.com/d12frosted/homebrew-emacs-plus][emacs+]] version. Detailed instructions are in the repository, including different versions of Emacs and additional options. In short, after installing [[https://brew.sh/][Homebrew]], run:
 #+BEGIN_SRC bash
@@ -16,16 +17,38 @@ brew install emacs-plus --with-imagemagick --with-debug --with-dbus --with-xwidg
 
 Then follow homebrew's instructions to add an icon to Emacs.
 
-* Setting up an SSH key for Github
+** Setting up an SSH key for Github
 
 On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then copy it to the clipboard =pbcopy < ~/.ssh/id_ed25519.pub= and paste it into Github. Do not forget to authorize access to any organizations, if you need.
 
-* Quick Start
+** Encryption with GPG
+
+1. Install =gnupg= with =brew install gnupg=.
+2. Generate a new key with =gpg --full-generate-key=. 
+3. Install "pinentry": =brew install pinentry-mac=.
+4. Configure GPG to use "pinentry": =echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf=.
+5. Relod the agent: =gpgconf --kill gpg-agent=.
+
+** Installing dependencies
+
+- Doom: =brew install ripgrep=
+- Graphviz: =brew install graphviz=
+- Remove any conflicting folder with emacs configs: =rm -rf ~/.emacs.d/=
+- Whisper: =git clone https://github.com/natrys/whisper.el.git <SAME PERSONAL FOLDER YOU WILL USE IN PERSONAL.EL>=
+
+** Installing Doom and Updating Configurations
 
 1. Install [[https://github.com/doomemacs/doomemacs][doomemacs]].
 2. Clone this repo into your Doom Emacs directory: =rm -rf ~/.config/doom && git clone git@github.com:guilherme-salome/emacs.git ~/.config/doom=.
 2. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
 3. Run =~/.config/emacs/bin/doom sync= and restart Emacs.
+
+** Configuring credentials
+
+1. Launch Emacs and visit the file =~/.authinfo.gpg=. Emacs will use your encryption key to load and save your file.
+2. Add a new entry with the following: =machine api.openai.com password <YOUR OPENAI API KEY>=.
+
+
 4. Install all requisite Python/Emacs dependencies (see =packages.el= and tool-specific notes below).
 5. Set up authentication (OpenAI key, etc.—stored securely via =.authinfo=).
 
