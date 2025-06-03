@@ -34,6 +34,7 @@ On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then cop
 - Remove any conflicting folder with emacs configs: =rm -rf ~/.emacs.d/=
 - Whisper: =git clone https://github.com/natrys/whisper.el.git <SAME PERSONAL FOLDER YOU WILL USE IN PERSONAL.EL>=
 - NPM: =brew install npm=
+- Latex: install [[https://www.tug.org/mactex/][MacTeX]]
 
 ** Installing Doom and Updating Configurations
 
