@@ -3,6 +3,6 @@
 (setq! personal-name "<YOUR NAME>"
        personal-email "<YOUR EMAIL>"
        personal-work-email "<YOUR WORK EMAIL>"
-       personal-folder "<YOUR MAIN EMACS FOLDER>"
-       personal-blog-folder "<YOUR WEBSITE REPOSITORY FOLDER">
+       personal-folder "<YOUR EMACS FOLDER WHERE YOU KEEP ORG FILES, SNIPPETS, ETC>"
+       personal-blog-folder "<YOUR WEBSITE REPOSITORY FOLDER>"
        personal-whisper-folder "<YOUR FOLDER FOR STORING WHISPER MODELS>")
