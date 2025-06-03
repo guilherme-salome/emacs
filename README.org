@@ -4,8 +4,6 @@ This repository manages my personal Doom Emacs configuration, tailored specifica
 
 It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyond sane defaults, this repo adds batteries-included workflows for data science (Python, R), Org-mode (including Org-roam, Hugo blogging, RevealJS presentations), LLM tools ([[https://openai.com][OpenAI]] and Whisper for transcription), and integrates Github Copilot AI completion.
 
-If you are interested in customizing for your own needs, see the "Customization Guide" and "Structure" sections.
-
 * Complete Set-Up Guide
 ** Installing Emacs
 
@@ -35,6 +33,7 @@ On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then cop
 - Graphviz: =brew install graphviz=
 - Remove any conflicting folder with emacs configs: =rm -rf ~/.emacs.d/=
 - Whisper: =git clone https://github.com/natrys/whisper.el.git <SAME PERSONAL FOLDER YOU WILL USE IN PERSONAL.EL>=
+- NPM: =brew install npm=
 
 ** Installing Doom and Updating Configurations
 
@@ -45,77 +44,15 @@ On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then cop
 
 ** Configuring credentials
 
+gptel:
+
 1. Launch Emacs and visit the file =~/.authinfo.gpg=. Emacs will use your encryption key to load and save your file.
 2. Add a new entry with the following: =machine api.openai.com password <YOUR OPENAI API KEY>=.
 
+copilot:
 
-4. Install all requisite Python/Emacs dependencies (see =packages.el= and tool-specific notes below).
-5. Set up authentication (OpenAI key, etc.—stored securely via =.authinfo=).
-
-* Structure
-
-- =init.el=: Modules to enable in Doom (UI, language support, tools, etc.)
-- =packages.el=: Extra package declarations (e.g., org-roam, gptel, whisper, copilot).
-- =config.el=: All heavy customizations for workflows, themes, Org-mode, LLMs, A/V configuration, etc.
-- =custom.el=: For custom user logic (currently unused).
-- =personal.el=: Your untracked private variables (name, email, paths, etc.).
-- =personal.el.sample=: Template for =personal.el=.
-
-* Features
-
-Languages:
-- Python, R (ESS); with LSP (language server) completions
-- Org-mode for notes, code, Roam (Zettelkasten)
-
-Org-mode Enhancements:
-- [[https://www.orgroam.com/][Org-roam]]
-- Hugo support (blogging)
-- RevealJS (org-re-reveal) for presentations
-- Special block extras for literate programming
-
-AI/LLMs:
-- [[https://github.com/karthink/gptel][gptel]] (OpenAI/ChatGPT integration—see =gptel= variables in =config.el=)
-- [[https://github.com/natrys/whisper.el][whisper.el]] for in-editor transcription (macOS-specific audio device handling)
-- [[https://github.com/copilot-emacs/copilot.el][GitHub Copilot]] for in-line AI code suggestions
-
-Productivity:
-- Workspaces, dashboard, modeline, and Magit (Git integration)
-- Extensive Org-agenda customizations
-
-* Authentication & Secrets
-
-- Sensitive info (personal name, emails, folder paths) is kept in =personal.el= (ignored by git);
-  copy from =personal.el.sample= and customize.
-- For LLM API keys, store OpenAI keys securely in =~/.authinfo= file.
-
-* Useful Customizations & Advice
-
-- Toggle and select audio input devices easily for Whisper using keybindings:
-  - =C-c m r=: Run Whisper with device prompt
-  - =C-c m d=: Choose default audio device
-- Many Org and agenda views are tuned for long time ranges (90 days), weekly views start on Sunday, and visually highlighted progress.
-
-* Extending & Modifying
-
-Adding More Packages or Languages:
-- Edit =init.el= (add language or tool modules)
-- Add further =package!= entries in =packages.el=
-- Customize in =config.el=
-
-Modifying Your Paths or Personal Data:
-- Change =personal.el= or add to =custom.el= for private logic
-
-LLM or API Customization:
-- Most gptel and Whisper configuration can be found in =config.el=, search by their names.
-
-* Updating & Doom Maintenance
-
-- After any =.el= changes, run =doom sync= for dependency resolution and native compilation.
-- Restart Emacs for all effects to apply.
-
-* Contributing
-
-Personal configuration, but PRs or suggestions are welcome if you find this useful as a data scientist!
+1. Open Emacs and run =M-x copilot-install-server=
+2. Login to copilt by running =M-x copilot-login=
 
 * License
 
