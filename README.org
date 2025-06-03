@@ -54,6 +54,12 @@ copilot:
 1. Open Emacs and run =M-x copilot-install-server=
 2. Login to copilt by running =M-x copilot-login=
 
+** Debugging
+
+gptel:
+
+- If the =~/.authinfo.gpg= file is not working well with your encryption key (i.e., password not fetched by Emacs), you could use the regular unencrypted =~/.authinfo= file. 
+
 * License
 
 This configuration is provided as-is, with no warranty. It is intended for personal use and for other data scientists interested in Emacs-based workflows.
