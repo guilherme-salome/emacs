@@ -74,7 +74,7 @@
 (use-package! gptel
   :config
   (setq!
-   gptel-api-key (auth-source-pick-first-password :host "api.openai.com") ; stored in ~/.authinfo
+   gptel-api-key (plist-get (car (auth-source-search :host "api.openai.com" :require '(:secret))) :secret) ; stored in ~/.authinfo.gpg
    gptel-default-mode 'org-mode))
 
 ;; whisper (transcription model)
