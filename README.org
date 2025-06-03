@@ -16,15 +16,16 @@ brew install emacs-plus --with-imagemagick --with-debug --with-dbus --with-xwidg
 
 Then follow homebrew's instructions to add an icon to Emacs.
 
-* Setting up an SSH key
+* Setting up an SSH key for Github
 
 On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then copy it to the clipboard =pbcopy < ~/.ssh/id_ed25519.pub= and paste it into Github. Do not forget to authorize access to any organizations, if you need.
 
 * Quick Start
 
-1. Clone this repo into your Doom Emacs directory (typically =~/.doom.d=).
+1. Install [[https://github.com/doomemacs/doomemacs][doomemacs]].
+2. Clone this repo into your Doom Emacs directory: =rm -rf ~/.config/doom && git clone git@github.com:guilherme-salome/emacs.git ~/.config/doom=.
 2. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
-3. Run =doom sync= and restart Emacs.
+3. Run =~/.config/emacs/bin/doom sync= and restart Emacs.
 4. Install all requisite Python/Emacs dependencies (see =packages.el= and tool-specific notes below).
 5. Set up authentication (OpenAI key, etc.—stored securely via =.authinfo=).
 
