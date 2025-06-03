@@ -5,9 +5,6 @@
      (when (file-exists-p personal-file)
        (load personal-file)))
 
-;; Prefer encrypted authentication source
-(setq! auth-sources '((:source "~/.authinfo.gpg")))
-
 ;; Basic MacOS adjusments
 (set-frame-parameter nil 'fullscreen 'maximized)
 (setq! doom-theme 'doom-fairy-floss
