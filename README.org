@@ -18,7 +18,7 @@ Then follow homebrew's instructions to add an icon to Emacs.
 
 * Setting up an SSH key
 
-On a terminal, run `ssh-keygen -t ed25519 -C "your_email@example.com"`. Then copy it to the clipboard `pbcopy < ~/.ssh/id_ed25519.pub` and paste it into Github. Do not forget to authorize access to any organizations, if you need.
+On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then copy it to the clipboard =pbcopy < ~/.ssh/id_ed25519.pub= and paste it into Github. Do not forget to authorize access to any organizations, if you need.
 
 * Quick Start
 
