@@ -5,6 +5,9 @@ This repository manages my personal Doom Emacs configuration, tailored specifica
 It leverages Doom Emacs for a fast, modular, and robust Emacs environment. Beyond sane defaults, this repo adds batteries-included workflows for data science (Python, R), Org-mode (including Org-roam, Hugo blogging, RevealJS presentations), LLM tools ([[https://openai.com][OpenAI]] and Whisper for transcription), and integrates Github Copilot AI completion.
 
 * Complete Set-Up Guide
+
+These are the steps I personally use whenever I need to set-up Emacs again on a new machine.
+
 ** Installing Emacs
 
 I installed Emacs on MacOS using the [[https://github.com/d12frosted/homebrew-emacs-plus][emacs+]] version. Detailed instructions are in the repository, including different versions of Emacs and additional options. In short, after installing [[https://brew.sh/][Homebrew]], run:
@@ -41,7 +44,9 @@ On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then cop
 1. Install [[https://github.com/doomemacs/doomemacs][doomemacs]].
 2. Clone this repo into your Doom Emacs directory: =rm -rf ~/.config/doom && git clone git@github.com:guilherme-salome/emacs.git ~/.config/doom=.
 2. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
-3. Run =~/.config/emacs/bin/doom sync= and restart Emacs.
+3. Run =~/.config/emacs/bin/doom sync=.
+4. Run =~/.config/emacs/bin/doom env=.
+5. Restart Emacs.
 
 ** Configuring credentials
 
@@ -55,11 +60,15 @@ copilot:
 1. Open Emacs and run =M-x copilot-install-server=
 2. Login to copilt by running =M-x copilot-login=
 
-** Debugging
+* Troubleshooting
 
 gptel:
 
 - If the =~/.authinfo.gpg= file is not working well with your encryption key (i.e., password not fetched by Emacs), you could use the regular unencrypted =~/.authinfo= file. 
+
+latex:
+
+- After installing MacTex, the PATH is modified to include the folder =/Library/TeX/texbin=. You can check if the same PATH is available within Emacs with =(getenv "PATH")=. If the PATHs differ, then you need to run =~/.config/emacs/bin/doom env= and restart Emacs.
 
 * License
 
