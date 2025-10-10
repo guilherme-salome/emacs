@@ -36,8 +36,7 @@
 
 ;; Org-mode configurations
 (after! org
-  (setq! org-agenda-files '((concat personal-folder "roam/projects/")
-                            (concat personal-folder "roam/people/"))
+  (setq! org-agenda-files (list (concat personal-folder "roam/lilly/main.org"))
          org-log-done 'note
          org-todo-keywords '((sequence "TODO(t)" "WORKING(w)" "WAITING(h)" "REVIEW(r)" "|" "DONE(d)" "CANCELED(c)"))
          org-todo-keyword-faces '(("TODO" . (:foreground "cyan"))
@@ -62,6 +61,13 @@
          org-export-babel-evaluate nil
          org-hide-emphasis-markers t
          org-format-latex-options (plist-put org-format-latex-options :scale 2))
+         org-capture-templates '(("w" "Weekly report" entry
+                                  (file+olp "~/Library/CloudStorage/GoogleDrive-guilhermesalome@gmail.com/My Drive/Emacs/roam/lilly/main.org" "Progress") "** %<%G>-W%<%V>\n*** Highlights\n*** Team Guidance\n*** Completed\n*** In-Progress\n*** Decisions and Requests\n*** Time Summary\n#+BEGIN: clocktable :scope agenda :block thisweek :stepskip0 t :fileskip0 t :match \"+meeting|+coaching|+code|+writing|+admin\"\n#+END:"))
+         org-log-done 'time
+         org-tag-alist
+         '(("meeting" . ?m) ("coaching" . ?c) ("code" . ?x) ("writing" . ?w) ("admin" . ?a))
+         org-use-tag-inheritance t
+         org-tags-exclude-from-inheritance '("ARCHIVE" "noexport")
   (org-babel-do-load-languages 'org-babel-load-languages '((dot . t))))
 
 ;; Hugo (blogging)
@@ -158,6 +164,12 @@ With PREFIX-ARG (C-u), always prompt for a new device."
   ;; so no prefix arg is passed down
   (funcall #'whisper-run))
 
+(defun rk/save-whisper-audio-clip ()
+  (let* ((archive-name (format-time-string "%Y%m%d%H%M%S.wav"))
+         (archive-file (file-name-concat personal-whisper-folder "recordings" archive-name)))
+    (make-directory (file-name-directory archive-file) t)
+    (copy-file whisper--temp-file archive-file)))
+
 (defvar whisper--ffmpeg-input-device nil)
 (use-package! whisper
   :bind (("C-c m r" . rk/whisper-run)   ; calls for audio-device first
@@ -165,22 +177,23 @@ With PREFIX-ARG (C-u), always prompt for a new device."
          ("C-c m w" . whisper-run))
   :config
   (setq! whisper-install-directory personal-whisper-folder
-         whisper-model "large-v3"
+         whisper-model "medium"
          whisper-language "auto"
          whisper-translate t
          whisper-use-threads (/ (num-processors) 2)
          whisper-insert-text-at-point nil
-         whisper-recording-timeout 7200))
+         whisper-recording-timeout 7200)
+  (add-hook 'whisper-after-transcription-hook #'rk/save-whisper-audio-clip 100))
 
 ;; Github Copilot
 ;; accept completion from copilot and fallback to company
-;;(use-package! copilot
-;;  :hook (prog-mode . copilot-mode)
-;;  :bind (:map copilot-completion-map
-;;              ("<tab>" . 'copilot-accept-completion)
-;;              ("TAB" . 'copilot-accept-completion)
-;;              ("C-TAB" . 'copilot-accept-completion-by-word)
-;;              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 
 ;; org-re-reveal (presentations using revealjs)
