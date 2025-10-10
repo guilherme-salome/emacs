@@ -76,15 +76,20 @@
          org-hugo-default-section-directory "blog"
          org-hugo-auto-set-lastmod t))
 
+;; Helper function to obtain credentials for LLM APIs
+(defun get-llm-api-key (host)
+  "Return the API key for HOST from auth-source (~/.authinfo.gpg). Returns nil if no entry found."
+  (let* ((entry (car (auth-source-search :host host :max 1 :require '(:secret)))))
+    (when entry
+      (let ((secret (plist-get entry :secret)))
+        (if (functionp secret) (funcall secret) secret)))))
+
 ;; gptel (LLMs)
 (use-package! gptel
   :config
-  (setq!
-   gptel-api-key (plist-get (car (auth-source-search :host "api.openai.com" :require '(:secret))) :secret) ; stored in ~/.authinfo.gpg
-   gptel-default-mode 'org-mode)
-  (gptel-make-anthropic "Claude"          ;Any name you want
-  :stream t                             ;Streaming responses
-  :key (plist-get (car (auth-source-search :host "api.anthropic.com" :require '(:secret))) :secret)))
+  (setq! gptel-api-key (get-llm-api-key "api.openai.com")
+         gptel-default-mode 'org-mode)
+  (gptel-make-anthropic "Claude" :stream t :key (get-llm-api-key "api.anthropic.com")))
 
 ;; whisper (transcription model)
 (defun rk/get-ffmpeg-device ()
@@ -210,7 +215,7 @@ With PREFIX-ARG (C-u), always prompt for a new device."
   (org-special-block-extras-mode)
   (org-defblock src (lang "" title nil)
                 "Fold-away all ‘src’ blocks as ‘<details>’ in HTML export.
-   For Hugo (Markdown) export, format as a Markdown fenced code block.
+`'   For Hugo (Markdown) export, format as a Markdown fenced code block.
    Other backends use default Org-mode export."
                 (cond
                  ;; Hugo Export: Format as a fenced Markdown code block
