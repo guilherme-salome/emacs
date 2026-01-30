@@ -64,15 +64,20 @@
          org-capture-templates '(("w" "Weekly report" entry
                                   (file+olp "~/Library/CloudStorage/GoogleDrive-guilhermesalome@gmail.com/My Drive/Emacs/roam/lilly.org" "Progress")
                                   "** %<%G>-W%<%V>\n*** Highlights\n*** Time Summary\n#+BEGIN: clocktable :block thisweek :maxlevel 3 :formula % :compact t\n#+END:"))
-         org-clock-into-drawer t
-         org-clock-persist 'history
-         org-log-done 'time
-         org-duration-format 'h:mm
          org-tag-alist
          '(("meeting" . ?m) ("coaching" . ?c) ("code" . ?x) ("writing" . ?w) ("admin" . ?a))
          org-use-tag-inheritance t
          org-tags-exclude-from-inheritance '("ARCHIVE" "noexport")
-  (org-babel-do-load-languages 'org-babel-load-languages '((dot . t))))
+  (org-babel-do-load-languages 'org-babel-load-languages '((dot . t)))
+  (with-eval-after-load 'org
+    (setq org-log-done 'time))
+  (with-eval-after-load 'org-clock
+    (setq org-clock-into-drawer t
+          org-clock-persist 'history)
+    (org-clock-persistence-insinuate))
+  (with-eval-after-load 'org-duration
+    (setq org-duration-format 'h:mm))
+  )
 
 ;; Hugo (blogging)
 (after! ox
