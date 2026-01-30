@@ -62,8 +62,12 @@
          org-hide-emphasis-markers t
          org-format-latex-options (plist-put org-format-latex-options :scale 2))
          org-capture-templates '(("w" "Weekly report" entry
-                                  (file+olp "~/Library/CloudStorage/GoogleDrive-guilhermesalome@gmail.com/My Drive/Emacs/roam/lilly/main.org" "Progress") "** %<%G>-W%<%V>\n*** Highlights\n*** Team Guidance\n*** Completed\n*** In-Progress\n*** Decisions and Requests\n*** Time Summary\n#+BEGIN: clocktable :scope agenda :block thisweek :stepskip0 t :fileskip0 t :match \"+meeting|+coaching|+code|+writing|+admin\"\n#+END:"))
+                                  (file+olp "~/Library/CloudStorage/GoogleDrive-guilhermesalome@gmail.com/My Drive/Emacs/roam/lilly.org" "Progress")
+                                  "** %<%G>-W%<%V>\n*** Highlights\n*** Time Summary\n#+BEGIN: clocktable :block thisweek :maxlevel 3 :formula % :compact t\n#+END:"))
+         org-clock-into-drawer t
+         org-clock-persist 'history
          org-log-done 'time
+         org-duration-format 'h:mm
          org-tag-alist
          '(("meeting" . ?m) ("coaching" . ?c) ("code" . ?x) ("writing" . ?w) ("admin" . ?a))
          org-use-tag-inheritance t
@@ -207,7 +211,20 @@ With PREFIX-ARG (C-u), always prompt for a new device."
 (use-package! org-roam
   :config
   (setq! org-roam-directory (concat personal-folder "roam/")
-         org-roam-dailies-directory "daily/"))
+         org-roam-dailies-directory "daily/"
+         org-roam-capture-templates
+         '(("d" "default" plain "%?"
+            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                               "#+title: ${title}\n")
+            :unnarrowed t)
+           ("lp" "lilly-person" plain "%?"
+            :target (file+head "lilly/people/${slug}.org"
+                               "#+title: ${title}\n")
+            :unnarrowed t)
+           ("ld" "lilly-document" plain "%?"
+            :target (file+head "lilly/docs/${slug}.org"
+                               "#+title: ${title}\n")
+            :unnarrowed t))))
 
 ;; org-special-block-extras
 (use-package! org-special-block-extras
