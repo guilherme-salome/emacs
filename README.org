@@ -44,11 +44,12 @@ On a terminal, run =ssh-keygen -t ed25519 -C "your_email@example.com"=. Then cop
 ** Installing Doom and Updating Configurations
 
 1. Install [[https://github.com/doomemacs/doomemacs][doomemacs]].
-2. Clone this repo into your Doom Emacs directory: =rm -rf ~/.config/doom && git clone git@github.com:guilherme-salome/emacs.git ~/.config/doom=.
-2. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
-3. Run =~/.config/emacs/bin/doom sync=.
-4. Run =~/.config/emacs/bin/doom env=.
-5. Restart Emacs.
+2. Run `doom doctor` a few times to fix any missing dependencies.
+3. Clone this repo into your Doom Emacs directory: =rm -rf ~/.config/doom && git clone git@github.com:guilherme-salome/emacs.git ~/.config/doom=.
+4. Copy and edit =personal.el.sample= to =personal.el=, filling in all your paths and personal details.
+5. Run =~/.config/emacs/bin/doom sync=.
+6. Run =~/.config/emacs/bin/doom env=.
+7. Restart Emacs.
 
 ** Configuring credentials
 
