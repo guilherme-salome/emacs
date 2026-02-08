@@ -270,3 +270,60 @@ With PREFIX-ARG (C-u), always prompt for a new device."
 
 ;; org-ql
 (use-package! org-ql)
+
+;;; Modern webdev: TS / TSX / Next.js / Node
+(after! lsp-mode
+  (setq lsp-idle-delay 0.2
+        lsp-log-io nil
+        read-process-output-max (* 1024 1024)
+        ;; Use workspace TypeScript (important for Next.js monorepos/plugins)
+        lsp-clients-typescript-prefer-use-project-ts-server t))
+
+;; Tree-sitter grammars (important: ts + tsx come from same repo)
+(after! treesit
+  (setq treesit-language-source-alist
+        '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (tsx        "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (json       "https://github.com/tree-sitter/tree-sitter-json" "master" "src")
+          (css        "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
+          (html       "https://github.com/tree-sitter/tree-sitter-html" "master" "src")))
+
+  ;; Prefer tree-sitter major modes
+  (dolist (pair '((typescript-mode . typescript-ts-mode)
+                  (js-mode         . js-ts-mode)
+                  (js2-mode        . js-ts-mode)
+                  (json-mode       . json-ts-mode)
+                  (css-mode        . css-ts-mode)))
+    (add-to-list 'major-mode-remap-alist pair)))
+
+;; File associations (Next.js)
+(add-to-list 'auto-mode-alist '("\\.ts\\'"  . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'"  . js-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.cjs\\'" . js-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-jsx-mode))
+
+;; Always start LSP in relevant modes
+(dolist (hook '(typescript-ts-mode-hook
+                tsx-ts-mode-hook
+                js-ts-mode-hook
+                js-jsx-mode-hook
+                json-ts-mode-hook
+                css-ts-mode-hook))
+  (add-hook hook #'lsp-deferred))
+
+;; Optional: let Prettier/ESLint handle formatting
+(with-eval-after-load 'lsp-javascript
+  (setq lsp-javascript-format-enable nil
+        lsp-typescript-format-enable nil))
+
+;; File drawer with treemacs
+(after! treemacs
+  (setq treemacs-width 35
+        treemacs-is-never-other-window t)
+  (treemacs-follow-mode 1)
+  (treemacs-filewatch-mode 1))
+(global-set-key (kbd "C-c o p") #'+treemacs/toggle)
+(global-set-key (kbd "C-c o f") #'treemacs-find-file)
